@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Vite cache
+.vite/
+
+# Build output
+dist/
+
+# System files
+**/.DS_Store
+Thumbs.db
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*.local
+.env.local
+
+# VS Code settings (optional, if you don't want to share workspace settings)
+.vscode/
+
+# IDE files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
