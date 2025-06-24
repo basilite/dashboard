@@ -1,8 +1,8 @@
 .sidebar{
     width: 50px; height: calc(100vh - 30px);
-    align-items: flex-start;
+    justify-content: space-between;
     margin: 15px;
-    padding: 25px;
+    padding: 25px 0 10px 0;
     border: 2px solid var(--chinese-white);
     border-radius: 50px;
 }
@@ -11,3 +11,7 @@
 .sidebar ul li:first-child{margin-bottom: 25px;}
 .sidebar ul li img{width: 23px; cursor: pointer; transition: .25s;}
 .sidebar ul li img:hover{scale: 1.1; transition: .25s;} /* TODO: update with icon fill color */
+
+.profile{gap: 10px; cursor: pointer;}
+.profile img.dots{width: 20px;}
+.profile img.profileImage{width: 30px; height: 30px; object-fit: cover; border-radius: 15px;}

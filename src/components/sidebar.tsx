@@ -1,7 +1,9 @@
 import styles from '../css/sidebar.module.css';
+import personPlaceholder from '../assets/person-placeholder-256x149.jpg';
+import dotsIcon from '../assets/icons/dots-black.svg';
 
-// icons
-import logo from '/public/logo-dark.svg'
+// page icons
+import logo from '/public/logo-dark.svg';
 import configurationIcon from '/public/icons/configuration.svg';
 import monitoringIcon from '/public/icons/monitoring.svg';
 import notificationsIcon from '/public/icons/notifications-and-alerts.svg';
@@ -21,7 +23,7 @@ const links = [
 
 export default function Sidebar(){
     return (
-        <aside className={[styles.sidebar, "center-flex"].join(' ')}>
+        <aside className={[styles.sidebar, "center-flex column"].join(' ')}>
             <ul className='flex column'>
                 {links.map((link) => (
                     <li key={link.path}>
@@ -31,6 +33,11 @@ export default function Sidebar(){
                     </li>
                 ))}
             </ul>
+                
+            <div className={[styles.profile, "center-flex column"].join(' ')}>
+                <img className={styles.dots} src={dotsIcon} alt="dots" />
+                <img className={styles.profileImage} src={personPlaceholder} alt="profile image" />
+            </div>
         </aside>
     )
 }
