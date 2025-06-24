@@ -6,6 +6,8 @@
   --alice-blue: #F0F3FF;
   --guppie-green: #12FF62;
   --violets-are-blue: #8B5DFF;
+
+  --chinese-white: #E0E0E0;
 }
 
 .flex{display: flex;}
