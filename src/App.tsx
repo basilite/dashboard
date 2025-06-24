@@ -1,5 +1,4 @@
 import AppRouter from './core/router';
-import './App.css'
 
 // TODO: add context providers
 function App(){
