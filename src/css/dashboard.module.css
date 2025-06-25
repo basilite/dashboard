@@ -1,1 +1,2 @@
-.dashboardMain{width: calc(100% - 85px); padding: 25px 0;}
+.dashboardContainer h1{font-size: 45px;}
+.dashboardMain{flex-grow: 1; padding: 25px 0;}

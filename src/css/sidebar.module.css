@@ -1,17 +1,48 @@
 .sidebar{
     width: 50px; height: calc(100vh - 30px);
+    align-items: flex-start;
     justify-content: space-between;
     margin: 15px;
-    padding: 25px 0 10px 0;
+    padding: 25px 0 10px 11px;
     border: 2px solid var(--chinese-white);
     border-radius: 50px;
+    transition: width .25s ease, padding 0.25s ease;
 }
+.sidebar:hover{width: 200px; align-items: flex-start; padding: 25px; transition: width .25s ease, padding 0.25s ease;}
 
 .sidebar ul{gap: 15px;}
 .sidebar ul li:first-child{margin-bottom: 25px;}
 .sidebar ul li img{width: 23px; cursor: pointer; transition: .25s;}
 .sidebar ul li img:hover{scale: 1.1; transition: .25s;} /* TODO: update with icon fill color */
 
-.profile{gap: 10px; cursor: pointer;}
-.profile img.dots{width: 20px;}
+.sidebar ul li span{
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    color: black;
+    transition: opacity 0.25s ease;
+    transition-delay: .1s;
+}
+.sidebar:hover ul li span{
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+    margin-left: 10px;
+    transition: opacity 0.25s ease;
+    transition-delay: .1s;
+}
+
+.profile{width: 30px; gap: 10px; margin-left: -3px; cursor: pointer; transition: .25s;}
+.profile img.dots{width: 20px; transform: translateY(30px) rotate(0deg); transition: transform 0.5s ease 0s;}
+.profile span.profileUsername{position: relative; visibility: visible; opacity: 0;}
 .profile img.profileImage{width: 30px; height: 30px; object-fit: cover; border-radius: 15px;}
+
+.sidebar:hover .profile{width: 100%; justify-content: space-between; flex-direction: row-reverse; transition: width .25s ease .1s;}
+.sidebar:hover .profile img.dots{position: absolute; transform: translateY(0) rotate(-90deg); transition: transform 0.25s ease;}
+.sidebar:hover .profile span.profileUsername{
+    flex-grow: 1;
+    visibility: visible;
+    opacity: 1;
+    transform: translate(0);
+    transition: opacity .25s ease .25s, transform .25s ease .25s;
+}

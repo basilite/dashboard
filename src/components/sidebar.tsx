@@ -27,8 +27,9 @@ export default function Sidebar(){
             <ul className='flex column'>
                 {links.map((link) => (
                     <li key={link.path}>
-                        <a href={`/${link.path}`}>
+                        <a className='flex' href={`/${link.path}`}>
                             {link.icon && <img src={link.icon} alt={link.label} />}
+                            <span>{link.label}</span>
                         </a>
                     </li>
                 ))}
@@ -36,6 +37,7 @@ export default function Sidebar(){
                 
             <div className={[styles.profile, "center-flex column"].join(' ')}>
                 <img className={styles.dots} src={dotsIcon} alt="dots" />
+                <span className={styles.profileUsername}>John</span>
                 <img className={styles.profileImage} src={personPlaceholder} alt="profile image" />
             </div>
         </aside>
