@@ -1,0 +1,14 @@
+.cardContainer{
+    display: grid;
+    gap: 15px;
+    grid-auto-rows: minmax(60px, auto);
+}
+
+.masonryItem{
+    padding: 16px;
+    border: 1px solid var(--chinese-white);
+    border-radius: 8px;
+    user-select: none;
+    cursor: grab;
+}
+.masonryItem.dragging{opacity: 0.4; background: green;}

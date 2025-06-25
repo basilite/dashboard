@@ -1,2 +1,3 @@
+.dashboardContainer header{margin: 10px 10px 50px 10px;}
 .dashboardContainer h1{font-size: 45px;}
-.dashboardMain{flex-grow: 1; padding: 25px 0;}
+.dashboardMain{flex-grow: 1; padding: 25px 15px 25px 0; overflow: hidden;}
