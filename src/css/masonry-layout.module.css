@@ -1,14 +1,15 @@
-.cardContainer{
-    display: grid;
-    gap: 15px;
-    grid-auto-rows: minmax(60px, auto);
-}
+.cardContainer{display: flex; gap: 15px; grid-auto-rows: minmax(60px, auto);}
+.columnContainer{gap: 15px;}
 
 .masonryItem{
     padding: 16px;
     border: 1px solid var(--chinese-white);
     border-radius: 8px;
+    color: #777;
+    background: white;
     user-select: none;
     cursor: grab;
 }
 .masonryItem.dragging{opacity: 0.4; background: green;}
+
+.placeholder{border-radius: 10px; border: 2px dashed var(--chinese-white);}

@@ -1,64 +1,130 @@
-import React, { useState, useEffect, type ReactNode } from "react";
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
-import { arrayMove, SortableContext, useSortable, rectSortingStrategy } from "@dnd-kit/sortable";
+import React, { useRef, useState } from "react";
+import { DndContext, closestCenter, MouseSensor, TouchSensor, useSensor, useSensors, type DragOverEvent, type DragEndEvent, type UniqueIdentifier } from "@dnd-kit/core";
+import { rectSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../css/masonry-layout.module.css";
 
-interface MasonryItemProps {
-  id: string;
-  children: ReactNode;
-}
+type Item = { id: number; height: number };
 
-function MasonryItem({ id, children }: MasonryItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const style: React.CSSProperties = { transform: CSS.Transform.toString(transform), transition };
-  return <div ref={setNodeRef} className={`${styles.masonryItem} ${isDragging ? "dragging" : ""}`} style={style} {...attributes} {...listeners}> {children} </div>;
-}
-
-export default function MasonryGrid() {
-  const [items, setItems] = useState([
-    "Elemento 1",
-    "Elemento 2",
-    "Elemento 3",
-    "Elemento 4",
-    "Elemento 5",
-    "Elemento 6",
-    "Elemento 7",
-    "Elemento 8",
-    "Elemento 9",
-  ]);
-
-  const sensors = useSensors(useSensor(PointerSensor));
-  const [columns, setColumns] = useState(3);
-
-  useEffect(() => {
-    function updateColumns(){
-      if(window.innerWidth < 600) setColumns(1);
-      else if(window.innerWidth < 900) setColumns(2);
-      else setColumns(3);
-    }
-    updateColumns();
-    window.addEventListener("resize", updateColumns);
-    return () => window.removeEventListener("resize", updateColumns);
-  }, []);
-
-  function handleDragEnd(event: DragEndEvent){ 
-    const { active, over } = event;
-    if(over && active.id !== over.id)
-        setItems((items) => {
-        const oldIndex = items.indexOf(active.id as string);
-        const newIndex = items.indexOf(over.id as string);
-        return arrayMove(items, oldIndex, newIndex);
-        });
-  }
+function MasonryCell({ item }: { item: Item }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isOver } = useSortable({ id: item.id });
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={items} strategy={rectSortingStrategy}>
-        <div className={styles.cardContainer} style={{gridTemplateColumns: `repeat(${columns}, 1fr)`}}>
-          {items.map((item) => <MasonryItem key={item} id={item}> {item} </MasonryItem> )}
-        </div>
-      </SortableContext>
+    <div ref={setNodeRef} className={styles.masonryItem} style={{
+        height: item.height,
+        position: isOver ? "relative" : undefined,
+        boxShadow: isOver ? "0 0 0 3px var(--guppie-green)" : "none",
+        transform: CSS.Translate.toString(transform),
+        transition,
+        zIndex: isOver ? 9999 : undefined,
+      }} {...attributes} {...listeners}>
+      {item.id}
+    </div>
+  );
+}
+
+export default function MasonryLayout() {
+  const initialItems: Item[] = Array.from({ length: 15 }, (_, i) => ({
+    id: i + 1, height: 80 + Math.floor(Math.random() * 120),
+  }));
+
+  const lastPosition = useRef<{ colIndex: number; itemIndex: number } | null>(null);
+  const [, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+  const [columns, setColumns] = useState<Item[][]>(() => {
+    const cols: Item[][] = [[], [], []];
+    initialItems.forEach((item, idx) => { cols[idx % 3].push(item); });
+    return cols;
+  });
+
+
+  function findColumnIndexAndItemIndex(id: UniqueIdentifier): { colIndex: number; itemIndex: number } | null {
+    const numericId = typeof id === "string" ? parseInt(id, 10) : id;
+
+    for(let colIndex = 0; colIndex < columns.length; colIndex++){
+      const itemIndex = columns[colIndex].findIndex((item) => item.id === numericId);
+      if(itemIndex !== -1) return { colIndex, itemIndex };
+    }
+    return null;
+  }
+
+  function areColsEqual(cols1: Item[][], cols2: Item[][]): boolean {
+    if(cols1.length !== cols2.length) return false;
+    for(let i = 0; i < cols1.length; i++){
+      if(cols1[i].length !== cols2[i].length) return false;
+      for(let j = 0; j < cols1[i].length; j++)
+        if (cols1[i][j].id !== cols2[i][j].id) return false;
+    }
+    return true;
+  }
+
+  function handleDragOver(event: DragOverEvent){
+    const { active, over } = event;
+    if(!over) return;
+
+    setOverId(over.id);
+
+    const activePos = findColumnIndexAndItemIndex(active.id);
+    const overPos = findColumnIndexAndItemIndex(over.id);
+    if (!activePos || !overPos) return;
+
+    if(lastPosition.current &&
+      lastPosition.current.colIndex === overPos.colIndex &&
+      lastPosition.current.itemIndex === overPos.itemIndex) return;
+
+    setColumns((cols) => {
+      const newCols = cols.map(col => [...col]);
+      const [moved] = newCols[activePos.colIndex].splice(activePos.itemIndex, 1);
+      newCols[overPos.colIndex].splice(overPos.itemIndex, 0, moved);
+      if(areColsEqual(cols, newCols)) return cols;
+      lastPosition.current = overPos;
+      return newCols;
+    });
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    setActiveId(null);
+    setOverId(null);
+    const { active, over } = event;
+
+    if(!over) return;
+    if(active.id !== over.id){
+      const activePos = findColumnIndexAndItemIndex(active.id);
+      const overPos = findColumnIndexAndItemIndex(over.id);
+      if(!activePos || !overPos) return;
+
+      setColumns((cols) => {
+        const newCols = cols.map((col) => [...col]);
+        const [moved] = newCols[activePos.colIndex].splice(activePos.itemIndex, 1);
+        newCols[overPos.colIndex].splice(overPos.itemIndex, 0, moved);
+        return newCols;
+      });
+    }
+  }
+
+
+  return (
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
+      <div className={styles.cardContainer}>
+        {columns.map((col, colIndex) => (
+          <SortableContext key={colIndex} items={col.map((item) => item.id)} strategy={rectSortingStrategy}>
+            <div style={{ flex: 1 }} className={`${styles.columnContainer} flex column`}>
+              {col.map((item, index) => {
+                const isOver = item.id === overId;
+                const nextItem = col[index + 1];
+
+                return (
+                  <React.Fragment key={item.id}>
+                    {isOver && nextItem && <div className={styles.placeholder} style={{ height: item.height + "px", marginBottom: `-${item.height+15}px` }}/> }
+                    <MasonryCell item={item} />
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </SortableContext>
+        ))}
+      </div>
     </DndContext>
   );
 }
