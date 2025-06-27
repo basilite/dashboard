@@ -3,6 +3,7 @@ import { DndContext, closestCenter, MouseSensor, TouchSensor, useSensor, useSens
 import { rectSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../css/masonry-layout.module.css";
+import draggableIcon from "../assets/icons/draggable-grey.svg";
 
 type Item = { id: number; height: number };
 
@@ -18,7 +19,9 @@ function MasonryCell({ item }: { item: Item }) {
         transition,
         zIndex: isOver ? 9999 : undefined,
       }}>
-      <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}> ☰ </div>
+      <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}>
+        <img src={draggableIcon} alt="" />
+      </div>
       {item.id}
     </div>
   );

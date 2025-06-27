@@ -13,9 +13,8 @@
 .masonryItem .dragHandle{
     width: 20px; height: 20px;
     position: absolute;
-    top: 5px; right: 5px;
+    top: 5px; right: 3px;
     border-radius: 5px;
-    background: var(--chinese-white);
     cursor: grab;
 }
 
