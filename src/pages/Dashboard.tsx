@@ -21,7 +21,7 @@ export default function DashboardPage(){
                     <div className={styles.text}>
                         <h1>John’s House</h1>
                         <div className={`${styles.subtitle} flex`}>
-                            <span className={`${styles.securityBadge} center-flex`} style={{background: !security ? "#AAE1C9" : undefined}}>
+                            <span className={`${styles.securityBadge} center-flex`} style={{background: security ? "#AAE1C9" : undefined}}>
                                 <img src={security ? securityEnabledIcon : securityDisabledIcon} alt={`security ${security ? "on" : "off"}`} />
                                 Security
                             </span>
