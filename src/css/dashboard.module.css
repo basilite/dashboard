@@ -1,3 +1,8 @@
 .dashboardContainer header{margin: 10px 10px 50px 10px;}
 .dashboardContainer h1{font-size: 45px;}
 .dashboardMain{height: 100vh; flex-grow: 1; padding: 25px 15px 25px 0; overflow-x: hidden;}
+
+.dashboardMain header{
+    justify-content: space-between;
+}
+.dashboardMain header button img{width: 25px;}

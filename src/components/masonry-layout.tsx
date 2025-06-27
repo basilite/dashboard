@@ -8,27 +8,27 @@ import draggableIcon from "../assets/icons/draggable-grey.svg";
 
 type Item = { id: number; height: number };
 
-function MasonryCell({ item }: { item: Item }) {
+function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
   const { attributes, listeners, setNodeRef, transform, transition, isOver } = useSortable({ id: item.id });
 
   return (
     <div ref={setNodeRef} className={styles.masonryItem} style={{
         height: item.height,
         position: "relative",
-        boxShadow: isOver ? "0 0 0 3px var(--guppie-green)" : "none",
+        border: isOver ? "3px solid var(--guppie-green)" : onEdit ? "2px dashed var(--chinese-white)" : undefined,
         transform: CSS.Translate.toString(transform),
         transition,
         zIndex: isOver ? 9999 : undefined,
       }}>
       <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}>
-        <img src={draggableIcon} alt="" />
+        {onEdit ? <img src={draggableIcon} alt="drag" /> : undefined}
       </div>
       {item.id}
     </div>
   );
 }
 
-export default function MasonryLayout() {
+export default function MasonryLayout({ onEdit }: { onEdit: boolean }){
   const initialItems: Item[] = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1, height: 80 + Math.floor(Math.random() * 120),
   }));
@@ -122,7 +122,7 @@ export default function MasonryLayout() {
                 return (
                   <React.Fragment key={item.id}>
                     {isOver && nextItem && <div className={styles.placeholder} style={{ height: item.height + "px", marginBottom: `-${item.height+15}px` }}/> }
-                    <MasonryCell item={item} />
+                    <MasonryCell item={item} onEdit={onEdit} />
                   </React.Fragment>
                 );
               })}
