@@ -12,12 +12,13 @@ function MasonryCell({ item }: { item: Item }) {
   return (
     <div ref={setNodeRef} className={styles.masonryItem} style={{
         height: item.height,
-        position: isOver ? "relative" : undefined,
+        position: "relative",
         boxShadow: isOver ? "0 0 0 3px var(--guppie-green)" : "none",
         transform: CSS.Translate.toString(transform),
         transition,
         zIndex: isOver ? 9999 : undefined,
-      }} {...attributes} {...listeners}>
+      }}>
+      <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}> ☰ </div>
       {item.id}
     </div>
   );

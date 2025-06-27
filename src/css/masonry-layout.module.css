@@ -8,8 +8,15 @@
     color: #777;
     background: white;
     user-select: none;
-    cursor: grab;
 }
 .masonryItem.dragging{opacity: 0.4; background: green;}
+.masonryItem .dragHandle{
+    width: 20px; height: 20px;
+    position: absolute;
+    top: 5px; right: 5px;
+    border-radius: 5px;
+    background: var(--chinese-white);
+    cursor: grab;
+}
 
 .placeholder{border-radius: 10px; border: 2px dashed var(--chinese-white);}
