@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { DndContext, closestCenter, MouseSensor, TouchSensor, useSensor, useSensors, type DragOverEvent, type DragEndEvent, type UniqueIdentifier } from "@dnd-kit/core";
 import { rectSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sortable";
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../css/masonry-layout.module.css";
 import draggableIcon from "../assets/icons/draggable-grey.svg";
@@ -109,7 +110,7 @@ export default function MasonryLayout() {
 
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
       <div className={styles.cardContainer}>
         {columns.map((col, colIndex) => (
           <SortableContext key={colIndex} items={col.map((item) => item.id)} strategy={rectSortingStrategy}>
