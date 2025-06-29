@@ -1,7 +1,9 @@
-.cardContainer{display: flex; gap: 15px; grid-auto-rows: minmax(60px, auto);}
+.cardContainer{display: flex; gap: 15px; flex-direction: row wrap;}
 .columnContainer{gap: 15px;}
 
 .masonryItem{
+    min-height: 60px;
+    flex-grow: 1;
     padding: 16px;
     border: 1px solid var(--chinese-white);
     border-radius: 8px;

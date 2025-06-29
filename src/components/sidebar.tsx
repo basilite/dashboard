@@ -3,21 +3,21 @@ import personPlaceholder from '../assets/person-placeholder-256x149.jpg';
 import dotsIcon from '../assets/icons/dots-black.svg';
 
 // page icons
-import logo from '/public/logo-dark.svg';
-import configurationIcon from '/public/icons/configuration.svg';
-import monitoringIcon from '/public/icons/monitoring.svg';
-import notificationsIcon from '/public/icons/notifications-and-alerts.svg';
-import systemIcon from '/public/icons/system.svg';
-import settingsIcon from '/public/icons/settings.svg';
+import logo from '../assets/icons/logo-dark.svg?react';
+import configurationIcon from '../assets/icons/configuration.svg?react';
+import monitoringIcon from '../assets/icons/monitoring.svg?react';
+import notificationsIcon from '../assets/icons/notifications-and-alerts.svg?react';
+import systemIcon from '../assets/icons/system.svg?react';
+import settingsIcon from '../assets/icons/settings.svg?react';
 
 // TODO: add color fill to icons on active and hover states
 const links = [
-  { path: "", label: "Dashboard", icon: logo },
-  { path: "configuration", label: "Configuration", icon: configurationIcon },
-  { path: "monitoring", label: "Monitoring", icon: monitoringIcon },
-  { path: "notifications", label: "Notifications", icon: notificationsIcon },
-  { path: "system", label: "System", icon: systemIcon },
-  { path: "settings", label: "Settings", icon: settingsIcon },
+  { path: "", label: "Dashboard", Icon: logo },
+  { path: "configuration", label: "Configuration", Icon: configurationIcon },
+  { path: "monitoring", label: "Monitoring", Icon: monitoringIcon },
+  { path: "notifications", label: "Notifications", Icon: notificationsIcon },
+  { path: "system", label: "System", Icon: systemIcon },
+  { path: "settings", label: "Settings", Icon: settingsIcon },
 ];
 
 
@@ -25,11 +25,11 @@ export default function Sidebar(){
     return (
         <aside className={[styles.sidebar, "center-flex column"].join(' ')}>
             <ul className='flex column'>
-                {links.map((link) => (
-                    <li key={link.path}>
-                        <a className='flex' href={`/${link.path}`}>
-                            {link.icon && <img src={link.icon} alt={link.label} />}
-                            <span>{link.label}</span>
+                {links.map(({ path, label, Icon }) => (
+                    <li key={path}>
+                        <a className='flex' href={`/${path}`}>
+                            <Icon className={styles.icon} />
+                            <span>{label}</span>
                         </a>
                     </li>
                 ))}
