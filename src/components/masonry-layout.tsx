@@ -4,9 +4,25 @@ import { rectSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sort
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../css/masonry-layout.module.css";
-import draggableIcon from "../assets/icons/draggable-grey.svg";
+import Sidebar from "../components/sidebar";
 
-type Item = { id: number; height: number };
+// icons
+import editIcon from "../assets/icons/edit-grey-333.svg"
+import doneIcon from "../assets/icons/done-green.svg"
+import draggableIcon from "../assets/icons/draggable-grey.svg";
+import dotsIcon from "../assets/icons/dots-black.svg"
+import securityEnabledIcon from "../assets/icons/security-enabled-black.svg";
+import securityDisabledIcon from "../assets/icons/security-disabled-black.svg";
+
+
+export interface Item {
+  id: number,
+  type: string,
+  height: number,
+  title: string,
+  content: string,
+  buttons?: string[]
+};
 
 function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
   const { attributes, listeners, setNodeRef, transform, transition, isOver } = useSortable({ id: item.id });
@@ -23,15 +39,34 @@ function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
       <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}>
         {onEdit ? <img src={draggableIcon} alt="drag" /> : undefined}
       </div>
-      {item.id}
+      <div className={`${styles.header} center-flex`}>
+        <label>{item.title}</label>
+        {!onEdit ? <img className={styles.dots} src={dotsIcon} alt="drag" /> : undefined}
+      </div>
+      <p>{item.content}</p>
     </div>
   );
 }
 
-export default function MasonryLayout({ onEdit }: { onEdit: boolean }){
+export default function MasonryLayout(){
+  const titles = ['System Status', 'Network Info', 'Backup Summary', 'Uptime', 'Memory Usage'];
+  const contents = [
+    'All services operational.',
+    'IP: 192.168.0.42 / Gateway: 192.168.0.1',
+    'Last backup completed 4h ago.',
+    'Running for 3 days, 4 hours.',
+    'Usage: 43% of 8 GB'
+  ];
+
   const initialItems: Item[] = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1, height: 80 + Math.floor(Math.random() * 120),
+    id: i + 1,
+    type: 'card',
+    height: 100 + Math.floor(Math.random() * 100), // random height between 100–200
+    title: titles[i % titles.length],
+    content: contents[i % contents.length],
+    buttons: i % 3 === 0 ? ['View', 'Delete'] : undefined
   }));
+
 
   const lastPosition = useRef<{ colIndex: number; itemIndex: number } | null>(null);
   const [, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -108,28 +143,51 @@ export default function MasonryLayout({ onEdit }: { onEdit: boolean }){
     }
   }
 
+  const [onEdit, setOnEdit] = useState(false);
+  const [security, setSecurityState] = useState(false) // TODO: implement security state handler
+
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
-      <div className={styles.cardContainer}>
-        {columns.map((col, colIndex) => (
-          <SortableContext key={colIndex} items={col.map((item) => item.id)} strategy={rectSortingStrategy}>
-            <div style={{ flex: 1 }} className={`${styles.columnContainer} flex column`}>
-              {col.map((item, index) => {
-                const isOver = item.id === overId;
-                const nextItem = col[index + 1];
+    <div className={`${styles.dashboardContainer} flex row`}>
+      <Sidebar />
+      <main className={styles.dashboardMain}>
+          <header className="center-flex">
+              <div className={styles.text}>
+                  <h1>John’s House</h1>
+                  <div className={`${styles.subtitle} flex`}>
+                      <span className={`${styles.securityBadge} center-flex`} style={{background: security ? "#AAE1C9" : undefined}}>
+                          <img src={security ? securityEnabledIcon : securityDisabledIcon} alt={`security ${security ? "on" : "off"}`} />
+                          Security
+                      </span>
+                      <p>12 Devices</p>
+                  </div>
+              </div>
+              <button aria-pressed={onEdit} aria-label={onEdit ? "Editing done" : "Edit"} onClick={() => setOnEdit(prev => !prev)}>
+                  <img src={onEdit ? doneIcon : editIcon} alt="edit" />
+              </button>
+          </header>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
+          <div className={styles.cardContainer}>
+            {columns.map((col, colIndex) => (
+              <SortableContext key={colIndex} items={col.map((item) => item.id)} strategy={rectSortingStrategy}>
+                <div style={{ flex: 1 }} className={`${styles.columnContainer} flex column`}>
+                  {col.map((item, index) => {
+                    const isOver = item.id === overId;
+                    const nextItem = col[index + 1];
 
-                return (
-                  <React.Fragment key={item.id}>
-                    {isOver && nextItem && <div className={styles.placeholder} style={{ height: item.height + "px", marginBottom: `-${item.height+15}px` }}/> }
-                    <MasonryCell item={item} onEdit={onEdit} />
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </SortableContext>
-        ))}
-      </div>
-    </DndContext>
+                    return (
+                      <React.Fragment key={item.id}>
+                        {isOver && nextItem && <div className={styles.placeholder} style={{ height: item.height + "px", marginBottom: `-${item.height+15}px` }}/> }
+                        <MasonryCell item={item} onEdit={onEdit} />
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </SortableContext>
+            ))}
+          </div>
+        </DndContext>
+      </main>
+    </div>
   );
 }

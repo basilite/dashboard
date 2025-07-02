@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // pages
-import DashboardPage from '../pages/Dashboard';
+import OverviewPage from '../pages/Overview';
 import LoginPage from '../pages/Login';
 import NotFoundPage from '../pages/NotFound';
 
 
 export const router = createBrowserRouter([
-  { path: '/', element: <DashboardPage /> },
+  { path: '/', element: <OverviewPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '*', element: <NotFoundPage /> },
 ]);
