@@ -1,0 +1,39 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.section > div label{font-weight: 700; font-size: 1rem; color: var(--primary-text-color);}
+.section > div{display: flex; flex-direction: column; gap: 5px;}
+.section > div input,
+.section > div button,
+.section > div select{
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  text-align: left;
+  color: var(--primary-text-color);
+  transition: border-color 0.3s ease;
+}
+.section > div input{background-color: var(--input-bg-color);}
+.section > div *.active{background-color: var(--primary-color); color: var(--secondary-text-color); border: none;}
+
+select:disabled{
+  background-color: var(--input-disabled-bg);
+  cursor: not-allowed;
+  color: var(--text-disabled);
+}
+
+select:hover:not(:disabled),
+select:focus:not(:disabled){
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+#language select{width: 100%; padding: 10px; border-radius: 5px;}

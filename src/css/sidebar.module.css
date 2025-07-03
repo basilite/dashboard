@@ -4,7 +4,7 @@
     justify-content: space-between;
     margin: 15px;
     padding: 25px 0 10px 11px;
-    border: 2px solid var(--chinese-white);
+    border: 2px solid var(--border-color);
     border-radius: 50px;
     transition: width .25s ease, padding 0.25s ease;
 }
@@ -13,13 +13,15 @@
 .sidebar ul{gap: 15px;}
 .sidebar ul li:first-child{margin-bottom: 25px;}
 .sidebar ul li .icon{width: 23px; height: fit-content; cursor: pointer; transition: .25s;}
-.sidebar ul li .icon:hover *{scale: 1.1; transition: fill 5s ease;} /* TODO: update with icon fill color */
+.sidebar ul li .icon *{stroke: var(--sidebar-icon-color); fill: none;}
+.sidebar ul li .icon:hover{scale: 1.1;}
+.sidebar ul li .icon:hover *, .sidebar ul li a.active .icon *{fill: var(--sidebar-icon-color); stroke: var(--sidebar-icon-color);}
 
 .sidebar ul li span{
     position: absolute;
     visibility: hidden;
     opacity: 0;
-    color: black;
+    color: var(--primary-text-color);
     transition: opacity 0.25s ease;
     transition-delay: .1s;
 }

@@ -148,24 +148,24 @@ export default function MasonryLayout(){
 
 
   return (
-    <div className={`${styles.dashboardContainer} flex row`}>
+    <div className={`pageContainer flex row`}>
       <Sidebar />
-      <main className={styles.dashboardMain}>
-          <header className="center-flex">
-              <div className={styles.text}>
-                  <h1>John’s House</h1>
-                  <div className={`${styles.subtitle} flex`}>
-                      <span className={`${styles.securityBadge} center-flex`} style={{background: security ? "#AAE1C9" : undefined}}>
-                          <img src={security ? securityEnabledIcon : securityDisabledIcon} alt={`security ${security ? "on" : "off"}`} />
-                          Security
-                      </span>
-                      <p>12 Devices</p>
-                  </div>
-              </div>
-              <button aria-pressed={onEdit} aria-label={onEdit ? "Editing done" : "Edit"} onClick={() => setOnEdit(prev => !prev)}>
-                  <img src={onEdit ? doneIcon : editIcon} alt="edit" />
-              </button>
-          </header>
+      <main>
+        <header className="center-flex">
+            <div className="text">
+                <h1>John’s House</h1>
+                <div className="subtitle flex">
+                    <span className={`${styles.securityBadge} center-flex`} style={{background: security ? "#AAE1C9" : undefined}}>
+                        <img src={security ? securityEnabledIcon : securityDisabledIcon} alt={`security ${security ? "on" : "off"}`} />
+                        Security
+                    </span>
+                    <p className="center-flex">12 Devices</p>
+                </div>
+            </div>
+            <button aria-pressed={onEdit} aria-label={onEdit ? "Editing done" : "Edit"} onClick={() => setOnEdit(prev => !prev)}>
+                <img src={onEdit ? doneIcon : editIcon} alt="edit" />
+            </button>
+        </header>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
           <div className={styles.cardContainer}>
             {columns.map((col, colIndex) => (
