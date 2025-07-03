@@ -1,0 +1,122 @@
+
+.settingsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.dashboardMain {
+  flex-grow: 1;
+  max-width: 500px;
+  padding: 20px;
+  background-color: var(--card-bg-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+
+.center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.center-flex h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.securityBadge {
+  user-select: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: transparent;
+  border: 2px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.securityBadge:hover {
+  background-color: var(--hover-bg-color);
+}
+
+
+.active {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  border-color: var(--primary-color);
+}
+
+
+.iconSmall {
+  width: 18px;
+  height: 18px;
+}
+
+
+.labelBold {
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+
+select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  font-size: 1rem;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
+}
+
+select:disabled {
+  background-color: var(--input-disabled-bg);
+  cursor: not-allowed;
+  color: var(--text-disabled);
+}
+
+select:hover:not(:disabled),
+select:focus:not(:disabled) {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.coordinatesInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: var(--input-bg-color);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-color);
+  font-family: monospace;
+  font-size: 1rem;
+  box-sizing: border-box;
+  user-select: text;
+}
+
