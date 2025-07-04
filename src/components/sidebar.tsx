@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import styles from '../css/sidebar.module.css';
 import personPlaceholder from '../assets/person-placeholder-256x149.jpg';
-import dotsIcon from '../assets/icons/dots-black.svg';
+import DotsIcon from '../assets/icons/dots-black.svg?react';
 
 // page icons
 import logo from '../assets/icons/logo-dark.svg?react';
@@ -40,7 +40,7 @@ export default function Sidebar(){
             </ul>
                 
             <div className={[styles.profile, "center-flex column"].join(' ')}>
-                <img className={styles.dots} src={dotsIcon} alt="dots" />
+                <DotsIcon className={styles.dots} />
                 <span className={styles.profileUsername}>John</span>
                 <img className={styles.profileImage} src={personPlaceholder} alt="profile image" />
             </div>

@@ -3,9 +3,10 @@
     align-items: flex-start;
     justify-content: space-between;
     margin: 15px;
-    padding: 25px 0 10px 11px;
+    padding: 25px 0 10px 12px;
     border: 2px solid var(--border-color);
     border-radius: 50px;
+    background-color: var(--sidebar-color);
     transition: width .25s ease, padding 0.25s ease;
 }
 .sidebar:hover{width: 200px; align-items: flex-start; padding: 25px; transition: width .25s ease, padding 0.25s ease;}
@@ -34,13 +35,14 @@
     transition-delay: .1s;
 }
 
-.profile{width: 30px; gap: 10px; margin-left: -3px; cursor: pointer; transition: .25s;}
-.profile img.dots{width: 20px; transform: translateY(30px) rotate(0deg); transition: transform 0.5s ease 0s;}
+.profile{width: 30px; gap: 10px; margin-left: -4px; cursor: pointer; transition: .25s;}
+.profile .dots{width: 25px; transform: translateY(30px) rotate(0deg); transition: transform 0.5s ease 0s;}
+.profile .dots *{stroke: var(--sidebar-icon-color); fill: var(--sidebar-icon-color);}
 .profile span.profileUsername{position: relative; visibility: visible; opacity: 0;}
 .profile img.profileImage{width: 30px; height: 30px; object-fit: cover; border-radius: 15px;}
 
 .sidebar:hover .profile{width: 100%; justify-content: space-between; flex-direction: row-reverse; transition: width .25s ease .1s;}
-.sidebar:hover .profile img.dots{position: absolute; transform: translateY(0) rotate(-90deg); transition: transform 0.25s ease;}
+.sidebar:hover .profile .dots{position: absolute; transform: translateY(0) rotate(-90deg); transition: transform 0.25s ease;}
 .sidebar:hover .profile span.profileUsername{
     flex-grow: 1;
     visibility: visible;
