@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import styles from '../css/sidebar.module.css';
 import personPlaceholder from '../assets/person-placeholder-256x149.jpg';
 import dotsIcon from '../assets/icons/dots-black.svg';
@@ -10,7 +11,6 @@ import notificationsIcon from '../assets/icons/notifications-and-alerts.svg?reac
 import systemIcon from '../assets/icons/system.svg?react';
 import settingsIcon from '../assets/icons/settings.svg?react';
 
-// TODO: add color fill to icons on active and hover states
 const links = [
   { path: "", label: "Dashboard", Icon: logo },
   { path: "configuration", label: "Configuration", Icon: configurationIcon },
@@ -22,17 +22,21 @@ const links = [
 
 
 export default function Sidebar(){
+    const location = useLocation();
+    
     return (
         <aside className={[styles.sidebar, "center-flex column"].join(' ')}>
             <ul className='flex column'>
-                {links.map(({ path, label, Icon }) => (
-                    <li key={path}>
+                {links.map(({ path, label, Icon }) => {
+                    const isActive = location.pathname === `/${path}`;
+
+                    return (<li key={path}>
                         <a className='flex' href={`/${path}`}>
-                            <Icon className={styles.icon} />
+                            <Icon className={`${styles.icon} ${isActive ? styles.active : ""}`} />
                             <span>{label}</span>
                         </a>
-                    </li>
-                ))}
+                    </li>);
+                })}
             </ul>
                 
             <div className={[styles.profile, "center-flex column"].join(' ')}>

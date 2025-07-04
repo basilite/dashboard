@@ -15,7 +15,7 @@
 .sidebar ul li .icon{width: 23px; height: fit-content; cursor: pointer; transition: .25s;}
 .sidebar ul li .icon *{stroke: var(--sidebar-icon-color); fill: none;}
 .sidebar ul li .icon:hover{scale: 1.1;}
-.sidebar ul li .icon:hover *, .sidebar ul li a.active .icon *{fill: var(--sidebar-icon-color); stroke: var(--sidebar-icon-color);}
+.sidebar ul li .icon:hover *, .sidebar ul li .icon.active *{fill: var(--sidebar-icon-color); stroke: var(--sidebar-icon-color);}
 
 .sidebar ul li span{
     position: absolute;
