@@ -4,15 +4,10 @@ import { rectSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sort
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../css/masonry-layout.module.css";
-import Sidebar from "../components/sidebar";
 
 // icons
-import editIcon from "../assets/icons/edit-grey-333.svg"
-import doneIcon from "../assets/icons/done-green.svg"
 import draggableIcon from "../assets/icons/draggable-grey.svg";
 import dotsIcon from "../assets/icons/dots-black.svg"
-import securityEnabledIcon from "../assets/icons/security-enabled-black.svg";
-import securityDisabledIcon from "../assets/icons/security-disabled-black.svg";
 
 
 export interface Item {
@@ -48,7 +43,7 @@ function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
   );
 }
 
-export default function MasonryLayout(){
+export default function MasonryLayout({ onEdit }: any){
   const titles = ['System Status', 'Network Info', 'Backup Summary', 'Uptime', 'Memory Usage'];
   const contents = [
     'All services operational.',
@@ -143,51 +138,28 @@ export default function MasonryLayout(){
     }
   }
 
-  const [onEdit, setOnEdit] = useState(false);
-  const [security, setSecurityState] = useState(false) // TODO: implement security state handler
-
 
   return (
-    <div className={`pageContainer flex row`}>
-      <Sidebar />
-      <main>
-        <header className="center-flex">
-            <div className="text">
-                <h1>John’s House</h1>
-                <div className="subtitle flex">
-                    <span className={`${styles.securityBadge} center-flex`} style={{background: security ? "#AAE1C9" : undefined}}>
-                        <img src={security ? securityEnabledIcon : securityDisabledIcon} alt={`security ${security ? "on" : "off"}`} />
-                        Security
-                    </span>
-                    <p className="center-flex">12 Devices</p>
-                </div>
-            </div>
-            <button aria-pressed={onEdit} aria-label={onEdit ? "Editing done" : "Edit"} onClick={() => setOnEdit(prev => !prev)}>
-                <img src={onEdit ? doneIcon : editIcon} alt="edit" />
-            </button>
-        </header>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
-          <div className={styles.cardContainer}>
-            {columns.map((col, colIndex) => (
-              <SortableContext key={colIndex} items={col.map((item) => item.id)} strategy={rectSortingStrategy}>
-                <div style={{ flex: 1 }} className={`${styles.columnContainer} flex column`}>
-                  {col.map((item, index) => {
-                    const isOver = item.id === overId;
-                    const nextItem = col[index + 1];
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
+      <div className={styles.cardContainer}>
+        {columns.map((col, colIndex) => (
+          <SortableContext key={colIndex} items={col.map((item) => item.id)} strategy={rectSortingStrategy}>
+            <div style={{ flex: 1 }} className={`${styles.columnContainer} flex column`}>
+              {col.map((item, index) => {
+                const isOver = item.id === overId;
+                const nextItem = col[index + 1];
 
-                    return (
-                      <React.Fragment key={item.id}>
-                        {isOver && nextItem && <div className={styles.placeholder} style={{ height: item.height + "px", marginBottom: `-${item.height+15}px` }}/> }
-                        <MasonryCell item={item} onEdit={onEdit} />
-                      </React.Fragment>
-                    );
-                  })}
-                </div>
-              </SortableContext>
-            ))}
-          </div>
-        </DndContext>
-      </main>
-    </div>
+                return (
+                  <React.Fragment key={item.id}>
+                    {isOver && nextItem && <div className={styles.placeholder} style={{ height: item.height + "px", marginBottom: `-${item.height+15}px` }}/> }
+                    <MasonryCell item={item} onEdit={onEdit} />
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          </SortableContext>
+        ))}
+      </div>
+    </DndContext>
   );
 }
