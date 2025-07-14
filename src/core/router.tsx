@@ -1,3 +1,5 @@
+// AppRouter.jsx
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // pages
@@ -6,15 +8,19 @@ import LoginPage from '../pages/Login';
 import NotFoundPage from '../pages/NotFound';
 import SettingsPage from '../pages/Settings';
 
-
-export const router = createBrowserRouter([
-  { path: '/', element: <OverviewPage /> },
-  { path: '/login', element: <LoginPage /> },
-  { path: '*', element: <NotFoundPage /> },
-  { path: '/settings', element: <SettingsPage /> },
+const router = createBrowserRouter([
+  {
+    path: '/',
+    children: [
+      { index: true, element: <OverviewPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'settings', element: <SettingsPage /> },
+      { path: '*', element: <NotFoundPage /> },
+    ],
+  },
 ]);
 
-
-export default function AppRouter(){
+export default function AppRouter() {
   return <RouterProvider router={router} />;
 }
+
