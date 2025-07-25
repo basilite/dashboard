@@ -11,27 +11,40 @@ body {
   --alice-blue: #F0F3FF;
   --guppie-green: #12FF62;
   --violets-are-blue: #8B5DFF;
-
   --chinese-white: #E0E0E0;
 
   --primary-text-color: var(--vampire-black);
   --secondary-text-color: var(--chinese-white);
   --primary-color: var(--guppie-green);
   --secondary-color: var(--violets-are-blue);
-  --border-color: var(--chinese-white);
+  
   --input-bg-color: #eee;
   --sidebar-color: #fff;
   --sidebar-icon-color: var(--vampire-black);
+  
+  --border-color: var(--chinese-white);
+  --card-color: transparent;
+  --card-color-inverted: #181b1f;
+  --icon-color: var(--vampire-black);
+  --badge-inactive: #FFBEBE;
+  --badge-active: #AAE1C9;
 }
 
 /* TODO: update dark theme palette */
 body.dark-theme{
-  --background-color: #141517;
+  --background-color: #101115;
   --primary-text-color: var(--chinese-white);
   --secondary-text-color: var(--vampire-black);
   --primary-color: var(--guppie-green);
   --secondary-color: var(--violets-are-blue);
-  --border-color: #444;
+  
+  --border-color: #212328;
+  --card-color: #181b1f;
+  --card-color-inverted: transparent;
+  --icon-color: #eee;
+  --badge-inactive: #FFBEBE;
+  --badge-active: #AAE1C9;
+
   --input-bg-color: #444;
   --sidebar-color: #232527;
   --sidebar-icon-color: var(--chinese-white);
@@ -56,6 +69,7 @@ input[readonly]{
   font-family: monospace;
   color: var(--primary-text-color);
   background-color: var(--input-bg-color);
+  outline: none;
 }
 
 
