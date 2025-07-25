@@ -36,3 +36,27 @@
  *   - Background: RGBA(51, 144, 255, 0.25)
  */
 .placeholder{border-radius: 10px; border: 2px dashed var(--guppie-green); background-color: rgba(18, 255, 98, .25);}
+
+
+
+.cardContainer {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.columnContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Quando lo schermo è stretto (mobile), impila le colonne verticalmente */
+@media (max-width: 900px) {
+  .cardContainer {
+    flex-direction: column;
+  }
+}

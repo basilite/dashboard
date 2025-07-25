@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DndContext, closestCenter, MouseSensor, TouchSensor, useSensor, useSensors, type DragOverEvent, type DragEndEvent, type UniqueIdentifier } from "@dnd-kit/core";
 import { rectSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sortable";
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
@@ -67,11 +67,28 @@ export default function MasonryLayout({ onEdit }: any){
   const [, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
-  const [columns, setColumns] = useState<Item[][]>(() => {
-    const cols: Item[][] = [[], [], []];
-    initialItems.forEach((item, idx) => { cols[idx % 3].push(item); });
-    return cols;
-  });
+  const [columnCount, setColumnCount] = useState(3);
+  const [columns, setColumns] = useState<Item[][]>([]);
+
+  // to resize columns (responsive)
+  useEffect(() => {
+    function updateColumnCount(){
+      const width = window.innerWidth;
+      if(width < 415) setColumnCount(1);
+      else if(width < 1050) setColumnCount(2);
+      else setColumnCount(3);
+    }
+
+    updateColumnCount();
+    window.addEventListener('resize', updateColumnCount);
+    return () => window.removeEventListener('resize', updateColumnCount);
+  }, []);
+
+  useEffect(() => {
+    const cols: Item[][] = Array.from({ length: columnCount }, () => []);
+    initialItems.forEach((item, idx) => { cols[idx % columnCount].push(item) });
+    setColumns(cols);
+  }, [columnCount]);
 
 
   function findColumnIndexAndItemIndex(id: UniqueIdentifier): { colIndex: number; itemIndex: number } | null {
