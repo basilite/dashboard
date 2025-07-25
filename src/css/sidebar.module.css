@@ -6,7 +6,7 @@
     padding: 25px 0 10px 12px;
     border: 2px solid var(--border-color);
     border-radius: 50px;
-    background-color: var(--sidebar-color);
+    background-color: var(--card-color);
     transition: width .25s ease, padding 0.25s ease;
 }
 .sidebar:hover{width: 200px; align-items: flex-start; padding: 25px; transition: width .25s ease, padding 0.25s ease;}

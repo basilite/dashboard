@@ -3,7 +3,11 @@
     gap: 5px;
     padding: 5px 10px;
     border-radius: 15px;
-    background: var(--chinese-white);
+    color: var(--vampire-black);
+    background: var(--badge-inactive);
 }
-.securityBadge.active{background-color: #AAE1C9;}
-.securityBadge img{width: 15px;}
+.securityBadge.active{background-color: var(--badge-active);}
+.securityBadge .securityEnabled, .securityBadge .securityDisabled{width: 15px; height: 15px; stroke: var(--icon-color);}
+
+.edit, .done{width: 25px; height: 25px;}
+.edit *{fill: var(--icon-color);}

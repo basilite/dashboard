@@ -7,7 +7,7 @@ import styles from "../css/masonry-layout.module.css";
 
 // icons
 import draggableIcon from "../assets/icons/draggable-grey.svg";
-import dotsIcon from "../assets/icons/dots-black.svg"
+import DotsIcon from "../assets/icons/dots-black.svg?react"
 
 
 export interface Item {
@@ -26,7 +26,7 @@ function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
     <div ref={setNodeRef} className={styles.masonryItem} style={{
         height: item.height,
         position: "relative",
-        border: isOver ? "3px solid var(--guppie-green)" : onEdit ? "2px dashed var(--chinese-white)" : undefined,
+        border: isOver ? "3px solid var(--guppie-green)" : onEdit ? "2px dashed var(--border-color)" : undefined,
         transform: CSS.Translate.toString(transform),
         transition,
         zIndex: isOver ? 9999 : undefined,
@@ -36,7 +36,7 @@ function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
       </div>
       <div className={`${styles.header} center-flex`}>
         <label>{item.title}</label>
-        {!onEdit ? <img className={styles.dots} src={dotsIcon} alt="drag" /> : undefined}
+        {!onEdit ? <DotsIcon className={styles.dots} /> : undefined}
       </div>
       <p>{item.content}</p>
     </div>
