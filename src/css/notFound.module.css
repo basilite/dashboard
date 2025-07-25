@@ -1,0 +1,15 @@
+section{
+    width: 100dvw; height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+button.goBack{
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: var(--secondary-text-color);
+    background: var(--card-color-inverted);
+}
