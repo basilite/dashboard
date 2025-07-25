@@ -1,5 +1,5 @@
 .cardContainer{display: flex; gap: 15px; flex-direction: row wrap;}
-.columnContainer{gap: 15px;}
+.columnContainer{display: flex; flex-direction: column; flex: 1; gap: 15px;}
 
 
 /*** CARD STYLES ***/
@@ -39,24 +39,8 @@
 
 
 
-.cardContainer {
-  display: flex;
-  gap: 15px;
-  width: 100%;
-  flex-wrap: wrap;
-}
+/*** RESPONSIVE ***/
 
-.columnContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  flex: 1;
-  min-width: 0;
-}
-
-/* Quando lo schermo è stretto (mobile), impila le colonne verticalmente */
-@media (max-width: 900px) {
-  .cardContainer {
-    flex-direction: column;
-  }
+@media screen and (max-width: 900px){
+  .cardContainer{flex-direction: column;}
 }

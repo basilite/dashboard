@@ -12,11 +12,16 @@ import DotsIcon from "../assets/icons/dots-black.svg?react"
 
 export interface Item {
   id: number,
-  type: string,
+  type?: string,
   height: number,
   title: string,
-  content: string,
+  info: string,
   buttons?: string[]
+};
+
+type MasonryLayoutProps = {
+  data: { type: string; title: string; info: string; }[]
+  onEdit: boolean;
 };
 
 function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
@@ -38,30 +43,28 @@ function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
         <label>{item.title}</label>
         {!onEdit ? <DotsIcon className={styles.dots} /> : undefined}
       </div>
-      <p>{item.content}</p>
+      <p>{item.info}</p>
     </div>
   );
 }
 
-export default function MasonryLayout({ onEdit }: any){
-  const titles = ['System Status', 'Network Info', 'Backup Summary', 'Uptime', 'Memory Usage'];
+export default function MasonryLayout({ data, onEdit }: MasonryLayoutProps){
+  /* const titles = ['System Status', 'Network Info', 'Backup Summary', 'Uptime', 'Memory Usage'];
   const contents = [
     'All services operational.',
     'IP: 192.168.0.42 / Gateway: 192.168.0.1',
     'Last backup completed 4h ago.',
     'Running for 3 days, 4 hours.',
     'Usage: 43% of 8 GB'
-  ];
+  ]; */
 
-  const initialItems: Item[] = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    type: 'card',
-    height: 100 + Math.floor(Math.random() * 100), // random height between 100–200
-    title: titles[i % titles.length],
-    content: contents[i % contents.length],
-    buttons: i % 3 === 0 ? ['View', 'Delete'] : undefined
+  const cards: Item[] = data.map((card, index) => ({
+    id: index + 1,
+    type: card.type,
+    title: card.title,
+    info: card.info,
+    height: 100 + Math.floor(Math.random() * 100), // oppure un valore fisso
   }));
-
 
   const lastPosition = useRef<{ colIndex: number; itemIndex: number } | null>(null);
   const [, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -86,7 +89,7 @@ export default function MasonryLayout({ onEdit }: any){
 
   useEffect(() => {
     const cols: Item[][] = Array.from({ length: columnCount }, () => []);
-    initialItems.forEach((item, idx) => { cols[idx % columnCount].push(item) });
+    cards.forEach((item, idx) => { cols[idx % columnCount].push(item) });
     setColumns(cols);
   }, [columnCount]);
 

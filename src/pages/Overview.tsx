@@ -2,6 +2,7 @@ import { useState } from "react";
 import MasonryLayout from "../components/masonry-layout";
 import Sidebar from "../components/sidebar";
 import styles from "../css/overview.module.css";
+import cards from '../data/cards.json'
 
 // icons
 import EditIcon from "../assets/icons/edit-grey-333.svg?react"
@@ -33,7 +34,7 @@ export default function OverviewPage(){
                     {!onEdit ? <EditIcon className={styles.edit} /> : <DoneIcon className={styles.done} />}
                 </button>
             </header>
-            <MasonryLayout onEdit={onEdit} /> {/* TODO: pass overview page cards as json */}
+            <MasonryLayout data={cards['Overview']} onEdit={onEdit} /> {/* TODO: pass overview page cards as json */}
             </main>
         </div>
     );

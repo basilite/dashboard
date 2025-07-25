@@ -1,0 +1,29 @@
+{
+    "Overview": [
+        {
+            "type": "card",
+            "title": "System Status",
+            "info": "All services operational."
+        },
+        {
+            "type": "card",
+            "title": "Network Info",
+            "info": "IP: 192.168.0.42 / Gateway: 192.168.0.1"
+        },
+        {
+            "type": "card",
+            "title": "Backup Summary",
+            "info": "Last backup completed 4h ago."
+        },
+        {
+            "type": "card",
+            "title": "Uptime",
+            "info": "Running for 3 days, 4 hours."
+        },
+        {
+            "type": "card",
+            "title": "Memory Usage",
+            "info": "Usage: 43% of 8 GB"
+        }
+    ]
+}
