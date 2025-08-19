@@ -36,9 +36,9 @@ function MasonryCell({ item, onEdit }: { item: Item; onEdit: boolean }){
         transition,
         zIndex: isOver ? 9999 : undefined,
       }}>
-      <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}>
-        {onEdit ? <img src={draggableIcon} alt="drag" /> : undefined}
-      </div>
+      {onEdit ? <div {...attributes} {...listeners} className={`${styles.dragHandle} center-flex`}>
+          <img src={draggableIcon} alt="drag" />
+        </div> : undefined}
       <div className={`${styles.header} center-flex`}>
         <label>{item.title}</label>
         {!onEdit ? <DotsIcon className={styles.dots} /> : undefined}

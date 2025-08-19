@@ -27,7 +27,7 @@
     font-size: 20px;
     color: var(--primary-text-color);
 }
-.header .dots{width: 15px; transform: rotate(90deg);}
+.header .dots{height: 15px; transform: rotate(90deg);}
 .header .dots *{stroke: var(--icon-color); fill: var(--icon-color);}
 
 /*
